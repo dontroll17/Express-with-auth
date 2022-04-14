@@ -2,6 +2,8 @@ const express = require('express');
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const env = require('dotenv').config({ path: './.env' });
+const models = require('./app/models');
 
 const app = express();
 const port = process.env.PORT || 3333;
@@ -17,6 +19,15 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+//Sync Databe
+models.sequelize.sync()
+    .then(() => {
+        console.log('Sync');
+    })
+    .catch(err => {
+        console.error(err);
+    });
 
 app.get('/', (req, res) => {
     res.send('App work');
