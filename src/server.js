@@ -3,6 +3,7 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const env = require('dotenv').config({ path: './.env' });
+const { resolve } = require('path'); 
 
 const models = require('./app/models');
 
@@ -34,7 +35,7 @@ models.sequelize.sync()
     });
 
 app.get('/', (req, res) => {
-    res.send('App work');
+    res.sendFile(resolve(__dirname + '../../views/home.html'));
 });
 
 app.listen(port, () => {
