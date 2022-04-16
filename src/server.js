@@ -10,6 +10,7 @@ const port = process.env.PORT || 3333;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/views', express.static(__dirname + 'src/views'));
 
 // Passport init
 app.use(session({
