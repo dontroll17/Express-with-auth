@@ -3,12 +3,11 @@ const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const env = require('dotenv').config({ path: './.env' });
+
 const models = require('./app/models');
 
 const app = express();
 const port = process.env.PORT || 3333;
-
-const authRoute = require('./routes/auth.js')(app);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,6 +20,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+const authRoute = require('./routes/auth.js')(app, passport);
+require('../config/passport/passport')(passport, models.user);
 
 //Sync Databe
 models.sequelize.sync()
