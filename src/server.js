@@ -8,9 +8,10 @@ const models = require('./app/models');
 const app = express();
 const port = process.env.PORT || 3333;
 
+const authRoute = require('./routes/auth.js')(app);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/views', express.static(__dirname + 'src/views'));
 
 // Passport init
 app.use(session({
